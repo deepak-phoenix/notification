@@ -1,6 +1,7 @@
 # notification
 
-A new Flutter project.
+This is notification app which will notify the user of the important event we have today and upcomming events like bithday's and stuff.
+This is the famliy app just used by the our family not by others.
 
 ## Getting Started
 
