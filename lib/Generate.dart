@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:notification/Event.dart';
-import 'package:notification/IteamState.dart';
 
 class GenerateList extends StatefulWidget {
   @override
@@ -9,61 +8,35 @@ class GenerateList extends StatefulWidget {
 }
 
 class _GenerateState extends State<GenerateList> {
-  List<IteamState> _data = generateIteam(events.length);
-
   @override
-  Widget build(BuildContext context) => SingleChildScrollView(
-        child: _buildPanel(),
+  Widget build(BuildContext context) => Material(
+        child: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              pinned: true,
+              expandedHeight: 200.0,
+              title: Text("Phoenix"),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                if (index.isOdd) return Divider();
+                var i = index ~/ 2;
+                return Container(
+                  child: ListTile(
+                    title: Text(
+                      events[i].getName(),
+                      style: TextStyle(fontSize: 18.0),
+                    ),
+                    trailing: Icon(events[i].getIsBirthday()
+                        ? Icons.cake
+                        : Icons.local_florist),
+                  ),
+                );
+              }, childCount: events.length),
+            )
+          ],
+        ),
       );
-
-  Widget _buildPanel() {
-    return ExpansionPanelList.radio(
-      children: _data.map<ExpansionPanelRadio>((IteamState iteam) {
-        var today = DateTime.now();
-        return ExpansionPanelRadio(
-          value: iteam.id,
-          headerBuilder: (BuildContext context, bool isExpanded) {
-            return ListTile(
-              title: Text(events[iteam.id].getName()),
-              trailing: Icon(
-                events[iteam.id].getIsBirthday()
-                    ? Icons.cake
-                    : Icons.local_florist,
-                color: events[iteam.id].getEvenDate().month > today.month
-                    ? Colors.red
-                    : events[iteam.id].getEvenDate().month == today.month
-                        ? events[iteam.id].getEvenDate().day >= today.day
-                            ? Colors.red
-                            : Colors.grey
-                        : Colors.grey,
-              ),
-              subtitle: Text(iteam.expandedValue),
-            );
-          },
-          body: ListTile(
-            title: Text(events[iteam.id].getIsBirthday()
-                ? "Happy birthday"
-                : "Happy Annerversary"),
-            subtitle: Text("Wishes from dp..."),
-          ),
-        );
-      }).toList(),
-    );
-  }
-}
-
-List<IteamState> generateIteam(int noOfIteams) {
-  return List.generate(
-    noOfIteams,
-    (int index) {
-      return IteamState(
-        index,
-        events[index].getEvenDate().day.toString() +
-            "/" +
-            events[index].getEvenDate().month.toString(),
-      );
-    },
-  );
 }
 
 final List<Event> events = [

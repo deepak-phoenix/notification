@@ -7,12 +7,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Phoenix"),
-        ),
-        body: GenerateList(),
+    return Center(
+      child: MaterialApp(
+        theme: ThemeData.light(),
+        home: GenerateList(),
       ),
     );
   }
