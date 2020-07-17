@@ -8,8 +8,8 @@ This is the famliy app just used by the our family not by others.
 
 UI
 1. New split list to divide events into upcomming events and the events that will happen in next year.
-2. New sliver app bar and list to add nearest event in there.
-3. New menu bar and fire logo, not decided on the function of that fire logo will decide in future.
+2. New sliver app bar and list to add nearest event in there. Count down will be there where now of days will be displayed until the event.
+3. New menu bar and refresh logo to update the data.
 
 Code 
 1. Created new utility file to add all the reuseable functions.
