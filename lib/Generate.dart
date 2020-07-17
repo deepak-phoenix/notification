@@ -11,21 +11,38 @@ class GenerateList extends StatefulWidget {
 class _GenerateState extends State<GenerateList> {
   @override
   Widget build(BuildContext context) {
-    var split = Utility();
-    List<Event> upcomming = split.upComming(_events);
-    List<Event> nextYear = split.nextYear(_events);
+    var utility = Utility();
+    List<Event> upcomming = utility.upComming(_events);
+    List<Event> nextYear = utility.nextYear(_events);
     return Material(
       child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
             pinned: true,
-            expandedHeight: 250.0,
+            expandedHeight: 175.0,
             title: Text("Phoenix"),
-            leading: Icon(Icons.menu),
+            leading: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {
+                writeToast("Menu", context);
+              },
+            ),
             actions: [
-              Icon(Icons.whatshot),
+              IconButton(
+                icon: Icon(Icons.refresh),
+                tooltip: "Refreshing",
+                onPressed: () {
+                  build(context);
+                  writeToast("Updating..", context);
+                },
+              )
             ],
-            // flexibleSpace: ,
+            flexibleSpace: Container(
+              child: FlexibleSpaceBar(
+                background: utility.countDownBuilder(upcomming[0]),
+              ),
+              height: double.infinity,
+            ),
           ),
           SliverList(
             delegate: sliverStringBuilder("Up comming"),

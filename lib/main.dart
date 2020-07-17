@@ -7,10 +7,9 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: MaterialApp(
-        theme: ThemeData.light(),
-        home: GenerateList(),
+    return MaterialApp(
+      home: Scaffold(
+        body: GenerateList(),
       ),
     );
   }

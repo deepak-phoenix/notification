@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:toast/toast.dart';
+
 import 'Event.dart';
 
 // non-static functions
 
 class Utility {
-  final today = DateTime.now();
+  var _today = DateTime.now();
 
 // This splits the whole events into the upcomming event
   List<Event> upComming(List<Event> events) {
     List<Event> returnEvent = [];
     events.forEach((element) {
-      if (element.getEvenDate().month > today.month ||
-          (element.getEvenDate().month == today.month &&
-              element.getEvenDate().day >= today.day)) {
+      if (element.getEvenDate().month > _today.month ||
+          (element.getEvenDate().month == _today.month &&
+              element.getEvenDate().day >= _today.day)) {
         returnEvent.add(element);
       }
     });
@@ -23,13 +25,38 @@ class Utility {
   List<Event> nextYear(List<Event> events) {
     List<Event> returnEvent = [];
     events.forEach((element) {
-      if (element.getEvenDate().month < today.month ||
-          (element.getEvenDate().month == today.month &&
-              element.getEvenDate().day < today.day)) {
+      if (element.getEvenDate().month < _today.month ||
+          (element.getEvenDate().month == _today.month &&
+              element.getEvenDate().day < _today.day)) {
         returnEvent.add(element);
       }
     });
     return returnEvent;
+  }
+
+  Widget countDownBuilder(Event next) {
+    var returnString = '';
+    var eventDate =
+        DateTime(_today.year, next.getEvenDate().month, next.getEvenDate().day);
+    var numberOfDays = eventDate.difference(_today);
+    if (eventDate.compareTo(_today) == 0)
+      returnString = "Wish " + next.getName() + " today.";
+    else
+      returnString = "Wish " +
+          next.getName() +
+          " in " +
+          numberOfDays.inDays.toString() +
+          " Days.";
+    return Center(
+      child: Text(
+        returnString,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 28.0,
+          color: Colors.white,
+        ),
+      ),
+    );
   }
 }
 
@@ -83,3 +110,8 @@ SliverChildListDelegate sliverStringBuilder(String message) =>
         color: Colors.grey,
       )
     ]);
+
+void writeToast(String msg, BuildContext context) => Toast.show(msg, context,
+    backgroundColor: Colors.black12,
+    textColor: Colors.black,
+    border: Border.all(color: Colors.black26, width: 0.5));
