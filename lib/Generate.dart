@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:notification/Event.dart';
+import 'Event.dart';
+import 'Utility.dart';
 
 class GenerateList extends StatefulWidget {
   @override
@@ -9,37 +10,42 @@ class GenerateList extends StatefulWidget {
 
 class _GenerateState extends State<GenerateList> {
   @override
-  Widget build(BuildContext context) => Material(
-        child: CustomScrollView(
-          slivers: <Widget>[
-            SliverAppBar(
-              pinned: true,
-              expandedHeight: 200.0,
-              title: Text("Phoenix"),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                if (index.isOdd) return Divider();
-                var i = index ~/ 2;
-                return Container(
-                  child: ListTile(
-                    title: Text(
-                      events[i].getName(),
-                      style: TextStyle(fontSize: 18.0),
-                    ),
-                    trailing: Icon(events[i].getIsBirthday()
-                        ? Icons.cake
-                        : Icons.local_florist),
-                  ),
-                );
-              }, childCount: events.length),
-            )
-          ],
-        ),
-      );
+  Widget build(BuildContext context) {
+    var split = Utility();
+    List<Event> upcomming = split.upComming(_events);
+    List<Event> nextYear = split.nextYear(_events);
+    return Material(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            pinned: true,
+            expandedHeight: 250.0,
+            title: Text("Phoenix"),
+            leading: Icon(Icons.menu),
+            actions: [
+              Icon(Icons.whatshot),
+            ],
+            // flexibleSpace: ,
+          ),
+          SliverList(
+            delegate: sliverStringBuilder("Up comming"),
+          ),
+          SliverList(
+            delegate: sliverListBuilder(upcomming),
+          ),
+          SliverList(
+            delegate: sliverStringBuilder("Next Year"),
+          ),
+          SliverList(
+            delegate: sliverListBuilder(nextYear),
+          ),
+        ],
+      ),
+    );
+  }
 }
 
-final List<Event> events = [
+final List<Event> _events = [
   Event("Prakesh", DateTime(0, 1, 1), false, true),
   Event("Saritha", DateTime(0, 1, 25), false, true),
   Event("Manya", DateTime(0, 1, 31), false, true),
