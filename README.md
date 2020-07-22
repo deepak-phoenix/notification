@@ -17,3 +17,6 @@ Code
 3. Added read from json file both from online and in local.
 4. Added sorted fun such that events will be in order.
 
+### v.2 - New Features
+#### Plan: 
+
