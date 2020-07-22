@@ -18,5 +18,6 @@ Code
 4. Added sorted fun such that events will be in order.
 
 ### v.2 - New Features
-#### Plan: 
+#### Plan:
+* In previous version I didnt write the local file with the new changes from the remote file. Now should add that.
 
